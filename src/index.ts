@@ -1,6 +1,7 @@
 import HttpServer from './class/server.class'
 import express from 'express'
 import cors from 'cors'
+import routes from './routes'
 
 const server = HttpServer.instance
 
@@ -11,6 +12,6 @@ server.app.use(express.json({ limit: '50mb'}))
 
 server.app.use(cors({origin: true, credentials: true}))
 
-server.app.use('/api')
+server.app.use('/api', routes)
 
 server.start()
