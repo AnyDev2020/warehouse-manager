@@ -1,5 +1,5 @@
 api:
-  identifier: 'anydev-authserver-microservice'
+  identifier: 'anydev-warehouse-manager-microservice'
   port: 5001
 
 logger:
@@ -9,6 +9,7 @@ logger:
 mongodb:
   url: 'mongodb://127.0.0.1:27017'
   database: 'anydev'
+  timeout: 10000
   options:
     useUnifiedTopology: true
     useNewUrlParser: true
