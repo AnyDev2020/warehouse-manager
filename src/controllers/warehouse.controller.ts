@@ -10,27 +10,12 @@ export default class WarehouseController {
                 try {
                     console.log(product)
                     if (!product || Object.keys(product).length === 0) {
-                        return reject({
-                            ok: false,
-                            message: 'No product data was provided',
-                            response: null,
-                            code: 400
-                        })
+                        return reject({ ok: false, message: 'No product data was provided', response: null, code: 400 })
                     }
                     const productCreated = await Products.create(product)
-                    return resolve({
-                        ok: true,
-                        message: 'Product created',
-                        response: productCreated,
-                        code: 201
-                    })
+                    return resolve({ ok: true, message: 'Product created', response: productCreated, code: 201 })
                 } catch (err) {
-                    return reject({
-                        ok: false,
-                        message: 'Error creating product',
-                        response: err,
-                        code: 500
-                    })
+                    return reject({ ok: false, message: 'Error creating product', response: err, code: 500 })
                 }
             })()
         })
@@ -42,12 +27,7 @@ export default class WarehouseController {
                 try {
                     const getProduct = await Products.find({})
                     if ( getProduct.length === 0 || !getProduct || getProduct.length < 1 ) {
-                        return reject({
-                            ok: true,
-                            message: 'No products found',
-                            response: null,
-                            code: 200
-                        })
+                        return reject({ ok: true, message: 'No products found', response: null, code: 200 })
                     }
 
                     const response = {
@@ -55,19 +35,9 @@ export default class WarehouseController {
                         totalProducts: getProduct.length
                     }
 
-                    return resolve({
-                        ok: true,
-                        message: 'Products found',
-                        response: response,
-                        code: 200
-                    })
+                    return resolve({ ok: true, message: 'Products found', response: response, code: 200 })
                 } catch (err) {
-                    return reject({
-                        ok: false,
-                        message: 'Error obtaining products',
-                        response: err,
-                        code: 500
-                    })
+                    return reject({ ok: false, message: 'Error obtaining products', response: err, code: 500 })
                 }
             })()
         })
@@ -84,26 +54,11 @@ export default class WarehouseController {
                     )
 
                     if (!productUpdated) {
-                        return reject({
-                            ok: false,
-                            message: 'Product not found',
-                            response: null,
-                            code: 404
-                        })
+                        return reject({ ok: false, message: 'Product not found', response: null, code: 404 })
                     }
-                    return resolve({
-                        ok: true,
-                        message: 'Product updated',
-                        response: productUpdated,
-                        code: 200
-                    })
+                    return resolve({ ok: true, message: 'Product updated', response: productUpdated, code: 200 })
                 } catch (err) {
-                    return reject({
-                        ok: false,
-                        message: 'Error updating product',
-                        response: err,
-                        code: 500
-                    })
+                    return reject({ ok: false, message: 'Error updating product', response: err, code: 500 })
                 }
             })()
         })
@@ -116,27 +71,12 @@ export default class WarehouseController {
                     const productDeleted = await Products.findOneAndDelete({ _sku: sku })
 
                     if (!productDeleted) {
-                        return reject({
-                            ok: false,
-                            message: 'Product not found',
-                            response: null,
-                            code: 404
-                        })
+                        return reject({ ok: false, message: 'Product not found', response: null, code: 404 })
                     }
 
-                    return resolve({
-                        ok: true,
-                        message: 'Product deleted',
-                        response: productDeleted,
-                        code: 200
-                    })
+                    return resolve({ ok: true, message: 'Product deleted', response: productDeleted, code: 200 })
                 } catch (err) {
-                    return reject({
-                        ok: false,
-                        message: 'Error deleting product',
-                        response: err,
-                        code: 500
-                    })
+                    return reject({ ok: false, message: 'Error deleting product', response: err, code: 500 })
                 }
             })()
         })
