@@ -8,7 +8,6 @@ export default class WarehouseController {
         return new Promise((resolve, reject) => {
             (async() => {
                 try {
-                    console.log(product)
                     if (!product || Object.keys(product).length === 0) {
                         return reject({ ok: false, message: 'No product data was provided', response: null, code: 400 })
                     }
