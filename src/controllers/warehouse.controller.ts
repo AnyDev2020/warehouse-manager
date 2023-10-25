@@ -66,11 +66,11 @@ export default class WarehouseController {
         })
     }
 
-    deleteProduct(sku: number): Promise<IResponse> {
+    deleteProduct(sku: string): Promise<IResponse> {
         return new Promise((resolve, reject) => {
             (async() => {
                 try {
-                    const productDeleted = await Products.findOneAndDelete({ _sku: sku })
+                    const productDeleted = await Products.findOneAndDelete({ sku })
 
                     if (!productDeleted) {
                         return reject({ ok: false, message: 'Product not found', response: null, code: 404 })

@@ -46,10 +46,10 @@ routes.put('/updateProduct', async(req: Request, res: Response) => {
     }
 })
 
-routes.delete('/deleteProduct:sku', async(req: Request, res: Response) => {
-    const _id = Number(req.query.id)
+routes.delete('/deleteProduct', async(req: Request, res: Response) => {
+    const sku = req.body.sku
     try {
-        const response = await warehouseController.deleteProduct(_id)
+        const response = await warehouseController.deleteProduct(sku)
         return res.status(response.code).json(response)
     } catch (err: any) {
         return res.status(err.code).json(err)
