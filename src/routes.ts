@@ -36,8 +36,10 @@ routes.post('/createProduct', async(req: Request, res: Response) => { // localho
 })
 
 routes.put('/updateProduct', async(req: Request, res: Response) => {
+    const product = req.body
+
     try {
-        const response = await warehouseController.updateProduct(req.body.sku, req.body.product)
+        const response = await warehouseController.updateProduct(product)
         return res.status(response.code).json(response)
     } catch (err: any) {
         return res.status(err.code).json(err)
@@ -45,9 +47,9 @@ routes.put('/updateProduct', async(req: Request, res: Response) => {
 })
 
 routes.delete('/deleteProduct:sku', async(req: Request, res: Response) => {
-    const {sku} = req.params
+    const _id = Number(req.query.id)
     try {
-        const response = await warehouseController.deleteProduct(Number(sku))
+        const response = await warehouseController.deleteProduct(_id)
         return res.status(response.code).json(response)
     } catch (err: any) {
         return res.status(err.code).json(err)

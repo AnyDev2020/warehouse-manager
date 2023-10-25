@@ -42,18 +42,21 @@ export default class WarehouseController {
         })
     }
 
-    updateProduct(sku: number, product: IProduct): Promise<IResponse> {
+    updateProduct(product: IProduct): Promise<IResponse> {
         return new Promise((resolve, reject) => {
             (async() => {
                 try {
                     const productUpdated = await Products.findOneAndUpdate(
-                        { _sku: sku }, 
+                        { _sku: product.sku }, 
                         product, 
                         { new: true }
                     )
 
                     if (!productUpdated) {
                         return reject({ ok: false, message: 'Product not found', response: null, code: 404 })
+                    }
+                    if (productUpdated.affected == 0) {
+                        reject({ ok: false, message: 'An error occurred while updating the product', response: null, code: 400 })
                     }
                     return resolve({ ok: true, message: 'Product updated', response: productUpdated, code: 200 })
                 } catch (err) {
