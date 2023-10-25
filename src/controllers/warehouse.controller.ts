@@ -14,7 +14,7 @@ export default class WarehouseController {
                     const productCreated = await Products.create(product)
                     return resolve({ ok: true, message: 'Product created', response: productCreated, code: 201 })
                 } catch (err) {
-                    return reject({ ok: false, message: 'Error creating product', response: err, code: 500 })
+                    return reject({ ok: false, message: 'Error in Database', response: err, code: 500 })
                 }
             })()
         })
@@ -26,17 +26,30 @@ export default class WarehouseController {
                 try {
                     const getProduct = await Products.find({})
                     if ( getProduct.length === 0 || !getProduct || getProduct.length < 1 ) {
-                        return reject({ ok: true, message: 'No products found', response: null, code: 200 })
+                        return reject({ ok: false, message: 'No products found', response: null, code: 404 })
                     }
 
-                    const response = {
-                        productsObtain: getProduct,
-                        totalProducts: getProduct.length
-                    }
-
-                    return resolve({ ok: true, message: 'Products found', response: response, code: 200 })
+                    return resolve({ ok: true, message: 'Products found', response: getProduct, code: 200 })
                 } catch (err) {
-                    return reject({ ok: false, message: 'Error obtaining products', response: err, code: 500 })
+                    return reject({ ok: false, message: 'Error in Database', response: err, code: 500 })
+                }
+            })()
+        })
+    }
+
+    getProductBySku(sku: string): Promise <IResponse> {
+        return new Promise((resolve, reject) => {
+            (async() => {
+                try {
+                    const getProduct = await Products.findOne({sku})
+
+                    if(!getProduct) {
+                        return reject({ ok: false, message: 'Product not found', response: null, code: 404 })
+                    }
+
+                    return resolve({ ok: true, message: 'Product found successfully', response: getProduct, code: 200 })
+                } catch(err) {
+                    return reject({ ok: false, message: 'Error in Database', response: err, code: 500 })
                 }
             })()
         })
@@ -60,7 +73,7 @@ export default class WarehouseController {
                     }
                     return resolve({ ok: true, message: 'Product updated', response: productUpdated, code: 200 })
                 } catch (err) {
-                    return reject({ ok: false, message: 'Error updating product', response: err, code: 500 })
+                    return reject({ ok: false, message: 'Error in Database', response: err, code: 500 })
                 }
             })()
         })
@@ -78,7 +91,7 @@ export default class WarehouseController {
 
                     return resolve({ ok: true, message: 'Product deleted', response: productDeleted, code: 200 })
                 } catch (err) {
-                    return reject({ ok: false, message: 'Error deleting product', response: err, code: 500 })
+                    return reject({ ok: false, message: 'Error in Database', response: err, code: 500 })
                 }
             })()
         })

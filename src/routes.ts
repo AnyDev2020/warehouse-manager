@@ -4,14 +4,14 @@ import WarehouseController from './controllers/warehouse.controller'
 const routes = Router()
 const warehouseController = new WarehouseController()
 
-routes.get('/hello', async(req: Request, res: Response) => {
+routes.get('/getSkuProduct', async(req: Request, res: Response) => {
+    const sku = req.body.sku
+
     try {
-        return res.status(200).json({
-            ok: true,
-            message: 'Hello world'
-        })
-    } catch (err: any) {
-        return res.status(500).json(err)
+        const response = await warehouseController.getProductBySku(sku)
+        return res.status(response.code).json(response)
+    } catch(err: any) {
+        return res.status(err.code).json(err)
     }
 })
 
