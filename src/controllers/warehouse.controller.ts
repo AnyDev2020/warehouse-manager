@@ -47,7 +47,7 @@ export default class WarehouseController {
             (async() => {
                 try {
                     const productUpdated = await Products.findOneAndUpdate(
-                        { _sku: product.sku }, 
+                        { sku: product.sku }, 
                         product, 
                         { new: true }
                     )
