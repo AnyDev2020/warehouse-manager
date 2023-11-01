@@ -97,4 +97,22 @@ export default class WarehouseController {
         })
     }
 
+    deleteProducts(skus: string[]): Promise<IResponse> {
+        return new Promise((resolve, reject) => {
+            (async () => {
+                try {
+                    const result = await Products.deleteMany({ sku: { $in: skus } });
+
+                    if (result.deletedCount === 0) {
+                        return reject({ ok: false, message: 'Products not found', response: null, code: 404 });
+                    }
+
+                    return resolve({ ok: true, message: 'Products deleted', response: result, code: 200 });
+                } catch (err) {
+                    return reject({ ok: false, message: 'Error in Database', response: err, code: 500 });
+                }
+            })();
+        });
+    }
+
 }

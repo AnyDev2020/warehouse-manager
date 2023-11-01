@@ -56,5 +56,16 @@ routes.delete('/deleteProduct', async(req: Request, res: Response) => {
     }
 })
 
+routes.delete('/deleteProducts', async (req: Request, res: Response) => {
+    const skus = req.body.skus;
+
+    try {
+        const response = await warehouseController.deleteProducts(skus);
+        return res.status(response.code).json(response);
+    } catch (err: any) {
+        return res.status(err.code).json(err);
+    }
+});
+
 
 export default routes
